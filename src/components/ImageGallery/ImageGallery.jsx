@@ -1,3 +1,4 @@
+
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
 import 'styles/styles.css';

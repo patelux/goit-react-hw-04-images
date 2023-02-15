@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
+import 'styles/styles.css';
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
-import 'styles/styles.css';
+
 
 export class Modal extends Component {
   onEscape = e => {
@@ -28,3 +30,10 @@ export class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  id: PropTypes.string.isRequired,
+  largeImage: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};

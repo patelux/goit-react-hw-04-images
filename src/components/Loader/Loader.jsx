@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Oval } from 'react-loader-spinner';
 
 export const Loader = () => {
@@ -33,3 +34,4 @@ export const Loader = () => {
     </div>
   );
 };
+
