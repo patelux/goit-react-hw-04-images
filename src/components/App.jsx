@@ -24,7 +24,6 @@ export class App extends Component {
       this.setState({ isLoading: true });
       try {
         const { hits, totalHits } = await fetchPhotosByQuery(query, page);
-        // console.log('data from server', hits);
         this.setState((prevState) => ({
           hits: [ ...prevState.hits, ...hits],
           showLoadMore: page < Math.ceil(totalHits / 12),
