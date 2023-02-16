@@ -4,7 +4,6 @@ import { Component } from 'react';
 import { createPortal } from 'react-dom';
 
 export class Modal extends Component {
-пше
   onEscape = e => {
     if (e.code === 'Escape') {
       this.props.closeModal();
