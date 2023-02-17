@@ -5,7 +5,7 @@ import 'styles/styles.css';
 import { Modal } from 'components/Modal/Modal';
 
 
-export function ImageGalleryItem ({ image, largeImage, tag }) {
+export function ImageGalleryItem ({ id, image, largeImage, tag }) {
 
 const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -17,7 +17,7 @@ const handlerToggleModal = () => {
       <li className="ImageGalleryItem" >
         <img className='ImageGalleryItem-image' onClick={handlerToggleModal} src={image} alt={tag} />
         {isOpenModal && (
-          <Modal largeImage={largeImage} closeModal={handlerToggleModal} />
+          <Modal tag={tag} id={id} largeImage={largeImage} closeModal={handlerToggleModal} />
         )}
       </li>
     );

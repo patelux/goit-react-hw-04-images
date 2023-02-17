@@ -1,37 +1,31 @@
 import PropTypes from 'prop-types';
 import 'styles/styles.css';
-import { Component } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-export class Modal extends Component {
-  onEscape = e => {
+export function Modal ({ closeModal, id, largeImage, tag }) {
+  
+  const onEscape = e => {
     if (e.code === 'Escape') {
-      this.props.closeModal();
+      closeModal();
     }
   };
 
-  handleBackdropClick = e => {
+  const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
-    this.props.closeModal();
+    closeModal();
 }
   };
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.onEscape);
-
+  useEffect(() => {
+    window.addEventListener('keydown', onEscape);
+    return () => {
+      window.removeEventListener('keydown', onEscape);
+    };
+  }, [closeModal]);
   
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onEscape);
-
-  }
-
-  render() {
-    const { id, largeImage, tag } = this.props;
-
-    return createPortal(
-      <div className="Overlay" onClick={this.handleBackdropClick}>
+      return createPortal(
+      <div className="Overlay" onClick={handleBackdropClick}>
         <div className="Modal" key={id}>
           <img src={largeImage} alt={tag}  />
         </div>
@@ -39,7 +33,7 @@ export class Modal extends Component {
       document.querySelector('#modal')
     );
   }
-}
+
 
 Modal.propTypes = {
   id: PropTypes.string,
