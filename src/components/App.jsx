@@ -1,4 +1,4 @@
-import React , { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import 'styles/styles.css';
 import { Loader } from 'components/Loader/Loader';
@@ -8,62 +8,68 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 
 
-export class App extends Component {
-  state = {
-    hits: [],
-    isLoading: false,
-    error: '',
-    page: 1,
-    showLoadMore: false,
-    query: '',
-  };
+export function App () {
 
-  async componentDidUpdate(_, prevState) {
-    const { query, page } = this.state;
-    if (prevState.query !== query || prevState.page !== page) {
-      this.setState({ isLoading: true });
-      try {
+const [hits, setHits] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState('');
+const [page, setPage] = useState(1);
+const [isEmpty, setIsEmpty] = useState(false);
+const [showLoadMore, setShowLoadMore] = useState(false);
+const [query, setQuery] = useState('');
+
+useEffect(() => {
+  if (!query) return;
+
+  const getImages = async () => {
+    setIsLoading(true);
+    try {
         const { hits, totalHits } = await fetchPhotosByQuery(query, page);
-        this.setState((prevState) => ({
-          hits: [ ...prevState.hits, ...hits],
-          showLoadMore: page < Math.ceil(totalHits / 12),
-        }));
-      } catch (error) {
+        if (hits.length === 0) {
+          setIsEmpty(true);
+          return;
+        }
+        setHits(prevState => [...prevState, ...hits]);
+        setShowLoadMore(page < Math.ceil(totalHits / 12));
+      } catch(error) {
+        setError(error.message);
       } finally {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
       }
-    };
+  };
+  getImages();
+}, [page, query]);
+  
+  const onSubmit = query => {
+      setQuery(query);
+      setHits([]);
+      setIsLoading(false);
+      setIsEmpty(false);
+      setError('');
+      setPage(1);
+      setShowLoadMore(false);
   };
 
-  onSubmit = query => {
-    this.setState({
-      query,
-      hits: [],
-      isloading: false,
-      error: '',
-      page: 1,
-      showLoadMore: false,
-    });
+  const handlerLoadMore = () => {
+    setPage(prevState => prevState + 1);
   };
 
-  handlerLoadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
-  };
-
-  render() {
-    const { showLoadMore, isLoading } = this.state;
-    return (
+  return (
       <>
       <div className='App'>               
         {isLoading && <Loader />}
-        <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery hits={this.state.hits}/>
+        <Searchbar onSubmit={onSubmit} />
+        {isEmpty ? (
+        <p>No photos found</p>
+      ) : (
+       <ImageGallery hits={hits}/>
+      )}
         {showLoadMore && (
-          <Button type="button" onClick={this.handlerLoadMore} />
+          <Button type="button" onClick={handlerLoadMore} />
         )}
+      {error && <p>Error: {error.message}</p>}
       </div>
       </>
     );
   }
-}
 
