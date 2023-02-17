@@ -4,12 +4,6 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 export function Modal ({ closeModal, largeImage, tag }) {
-  
-  const onEscape = e => {
-    if (e.code === 'Escape') {
-      closeModal();
-    }
-  };
 
   const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
@@ -18,11 +12,17 @@ export function Modal ({ closeModal, largeImage, tag }) {
   };
 
   useEffect(() => {
+    const onEscape = e => {
+      if (e.code === 'Escape') {
+        closeModal();
+      }
+    };
     window.addEventListener('keydown', onEscape);
     return () => {
       window.removeEventListener('keydown', onEscape);
     };
   }, [closeModal]);
+
   
       return createPortal(
       <div className="Overlay" onClick={handleBackdropClick}>
