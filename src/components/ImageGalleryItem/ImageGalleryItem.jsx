@@ -17,7 +17,7 @@ const handlerToggleModal = () => {
       <li className="ImageGalleryItem" >
         <img className='ImageGalleryItem-image' onClick={handlerToggleModal} src={image} alt={tag} />
         {isOpenModal && (
-          <Modal tag={tag} id={id} largeImage={largeImage} closeModal={handlerToggleModal} />
+          <Modal tag={tag} largeImage={largeImage} closeModal={handlerToggleModal} />
         )}
       </li>
     );

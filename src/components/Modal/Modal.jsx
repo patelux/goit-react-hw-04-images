@@ -3,7 +3,7 @@ import 'styles/styles.css';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-export function Modal ({ closeModal, id, largeImage, tag }) {
+export function Modal ({ closeModal, largeImage, tag }) {
   
   const onEscape = e => {
     if (e.code === 'Escape') {
@@ -26,7 +26,7 @@ export function Modal ({ closeModal, id, largeImage, tag }) {
   
       return createPortal(
       <div className="Overlay" onClick={handleBackdropClick}>
-        <div className="Modal" key={id}>
+        <div className="Modal">
           <img src={largeImage} alt={tag}  />
         </div>
       </div>,
