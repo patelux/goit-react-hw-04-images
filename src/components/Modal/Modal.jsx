@@ -31,9 +31,9 @@ export class Modal extends Component {
     const { id, largeImage, tag } = this.props;
 
     return createPortal(
-      <div className="Overlay" >
+      <div className="Overlay" onClick={this.handleBackdropClick}>
         <div className="Modal" key={id}>
-          <img src={largeImage} alt={tag} onClick={this.handleBackdropClick}/>
+          <img src={largeImage} alt={tag}  />
         </div>
       </div>,
       document.querySelector('#modal')

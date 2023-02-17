@@ -18,8 +18,8 @@ export class ImageGalleryItem extends Component {
     const {  image, largeImage, tag } = this.props;
 
     return (
-      <li className="ImageGalleryItem" onClick={this.handlerToggleModal}>
-        <img className='ImageGalleryItem-image' src={image} alt={tag} />
+      <li className="ImageGalleryItem" >
+        <img className='ImageGalleryItem-image' onClick={this.handlerToggleModal} src={image} alt={tag} />
         {this.state.isOpenModal && (
           <Modal largeImage={largeImage} closeModal={this.handlerToggleModal} />
         )}
