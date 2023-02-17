@@ -7,13 +7,17 @@ export function Searchbar ({onSubmit}) {
 const [query, setQuery] = useState('');
 
  const handlerInput = ({ target }) => {
-    setQuery(target.value.trim());
+    setQuery(target.value);
   };
 
   const handlerSubmit = event => {
     event.preventDefault();
     onSubmit(query);
-    setQuery('');
+    if (query.trim() === '' ) {
+      alert('Please enter a search query!');
+      return;
+    }
+      setQuery('');
   };
     return (
       <header className="Searchbar">
