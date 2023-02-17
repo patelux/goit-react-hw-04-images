@@ -7,7 +7,7 @@ export function Searchbar ({onSubmit}) {
 const [query, setQuery] = useState('');
 
  const handlerInput = ({ target }) => {
-    setQuery(target.value);
+    setQuery(target.value.trim());
   };
 
   const handlerSubmit = event => {
